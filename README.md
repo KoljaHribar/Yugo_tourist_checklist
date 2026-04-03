@@ -1,50 +1,77 @@
-# Welcome to your Expo app 👋
+# Yugoslavia Tourist Checklist
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is an app that would hypothetically help you track your landmarks visited in Yugoslaiva (back when it was a country). You can filter through many different sights you want to visit and track your stats of locations visited.
 
-## Get started
+## SCREEN 1 -> MY ACCOMPLISHMENTS
 
-1. Install dependencies
+    This screen features all of the locations that the Yugoslav government recommneded toursists to visit. The user can filter the locations based on the country they are currently located in. The locations also include Elevation and the region it belongs to along with the country of the location.
 
-   ```bash
-   npm install
-   ```
+ ## SCREEN 2 -> MY STATS
 
-2. Start the app
+    This screen tracks the user's stats. The user can filter for which country they want to see their stats. The screen shows them what percentage of locations they have visited, what their total elevation is and how many regions they have already completed.
 
-   ```bash
-   npx expo start
-   ```
+ ## One thing I learned about mobile development that surprised me
 
-In the output, you'll find options to open the app in a
+    How a small visual change can make the app more pleasant to use but also more addictive. I watched a couple of phone app design videos and all of them were talking about making each feature as addictive as possible. I wasn't thinking about designing the app to be adictive when I started, but I could 100% see the former Yugoslav government think about that and optimize most of the features to exploit our pshychology.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Local checklist app built with **Expo** and **React Native**. Everything below is what you need to run it on your machine.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## Before you start
 
-When you're ready, run:
+| Requirement | Notes |
+|-------------|--------|
+| **Node.js** | **v18** or newer (LTS recommended) |
+| **npm** | Comes with Node; or use **yarn** / **pnpm** if you prefer |
+
+Install Node from [nodejs.org](https://nodejs.org/) if you do not have it yet.
+
+---
+
+## Set up & run
+
+### 1. Install dependencies
+
+From the project folder:
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+All libraries the app uses are listed in `package.json`. Running this command installs them—**no extra manual packages** are required.
 
-## Learn more
+### 2. Start the dev server
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+npx expo start
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+A QR code and a menu will appear in the terminal.
 
-## Join the community
+### 3. Open the app
 
-Join our community of developers creating universal apps.
+| Where you want to run | What to do |
+|------------------------|------------|
+| **Phone (Expo Go)** | Install [Expo Go](https://expo.dev/go), scan the QR code (same Wi‑Fi as your computer). |
+| **iOS Simulator** | Press `i` in the terminal (macOS + Xcode). |
+| **Android Emulator** | Press `a` in the terminal (Android Studio emulator running). |
+| **Web browser** | Press `w` in the terminal, or run `npm run web`. |
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Shortcut scripts** (same as `expo start` with a target):
+
+```bash
+npm run ios      # iOS simulator
+npm run android  # Android emulator
+npm run web      # web
+```
+
+---
+
+## API keys & environment variables
+
+**None.** The app stores progress on the device with **Async Storage** only. You do **not** need `.env` files, API keys, or backend accounts to run it.
+
+---
+
+That’s it—install, `npx expo start`, then pick a platform from the menu.
