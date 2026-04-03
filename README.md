@@ -4,15 +4,21 @@ This is an app that would hypothetically help you track your landmarks visited i
 
 ## SCREEN 1 -> MY ACCOMPLISHMENTS
 
-    This screen features all of the locations that the Yugoslav government recommneded toursists to visit. The user can filter the locations based on the country they are currently located in. The locations also include Elevation and the region it belongs to along with the country of the location.
+    This screen features all of the locations that the Yugoslav government recommneded toursists to visit. 
+    The user can filter the locations based on the country they are currently located in. 
+    The locations also include Elevation and the region it belongs to along with the country of the location.
 
  ## SCREEN 2 -> MY STATS
 
-    This screen tracks the user's stats. The user can filter for which country they want to see their stats. The screen shows them what percentage of locations they have visited, what their total elevation is and how many regions they have already completed.
+    This screen tracks the user's stats. The user can filter for which country they want to see their stats. 
+    The screen shows them what percentage of locations they have visited, what their total elevation is and how many regions they have already completed.
 
  ## One thing I learned about mobile development that surprised me
 
-    How a small visual change can make the app more pleasant to use but also more addictive. I watched a couple of phone app design videos and all of them were talking about making each feature as addictive as possible. I wasn't thinking about designing the app to be adictive when I started, but I could 100% see the former Yugoslav government think about that and optimize most of the features to exploit our pshychology.
+    How a small visual change can make the app more pleasant to use but also more addictive. 
+    I watched a couple of phone app design videos and all of them were talking about making each feature as addictive as possible. 
+    I wasn't thinking about designing the app to be adictive when I started, 
+    but I could 100% see the former Yugoslav government think about that and optimize most of the features to exploit our pshychology.
 
 Local checklist app built with **Expo** and **React Native**. Everything below is what you need to run it on your machine.
 
