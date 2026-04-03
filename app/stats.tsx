@@ -1,6 +1,6 @@
 import { MainScreenShell } from "@/components/MainScreenShell";
 import { SightsVisitedBar } from "@/components/SightsVisitedBar";
-import { palette } from "@/constants/theme";
+import { cardShadow, palette } from "@/constants/theme";
 import { useCountryFilter } from "@/context/CountryFilterContext";
 import { useVisited } from "@/context/VisitedContext";
 import { LOCATIONS } from "@/data/locations";
@@ -26,20 +26,16 @@ export default function StatsScreen() {
     >
       <SightsVisitedBar percent={stats.percent} />
 
-      <View style={styles.statBlock}>
-        <View style={styles.statRow}>
-          <Text style={styles.statLabel}>Elevation Gained (In Meters)</Text>
-          <Text style={styles.statValue}>{stats.elevationSum}m</Text>
-        </View>
+      <View style={[styles.statCard, styles.statCardTeal, cardShadow]}>
+        <Text style={styles.statLabel}>Elevation Gained (In Meters)</Text>
+        <Text style={styles.statValueTeal}>{stats.elevationSum}m</Text>
       </View>
 
-      <View style={styles.statBlock}>
-        <View style={styles.statRow}>
-          <Text style={styles.statLabel}>Covered Regions</Text>
-          <Text style={styles.statValue}>
-            {stats.fullyCoveredRegions}/{stats.totalRegions}
-          </Text>
-        </View>
+      <View style={[styles.statCard, styles.statCardAmber, cardShadow]}>
+        <Text style={styles.statLabel}>Covered Regions</Text>
+        <Text style={styles.statValueAmber}>
+          {stats.fullyCoveredRegions}/{stats.totalRegions}
+        </Text>
       </View>
     </MainScreenShell>
   );
@@ -47,25 +43,42 @@ export default function StatsScreen() {
 
 const styles = StyleSheet.create({
   statsScrollContent: {
-    paddingTop: 8,
+    paddingTop: 4,
+    gap: 4,
   },
-  statBlock: {
-    marginBottom: 28,
+  statCard: {
+    paddingVertical: 18,
+    paddingHorizontal: 18,
+    borderRadius: 16,
+    backgroundColor: palette.surface,
+    borderWidth: 2,
+    borderColor: palette.borderLight,
+    marginBottom: 16,
+    borderLeftWidth: 5,
   },
-  statRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "baseline",
-    gap: 8,
+  statCardTeal: {
+    borderLeftColor: palette.success,
+  },
+  statCardAmber: {
+    borderLeftColor: palette.warning,
   },
   statLabel: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: "700",
     color: palette.text,
+    marginBottom: 10,
+    lineHeight: 22,
   },
-  statValue: {
-    fontSize: 17,
+  statValueTeal: {
+    fontSize: 28,
     fontWeight: "800",
-    color: palette.accent,
+    color: palette.success,
+    letterSpacing: -0.5,
+  },
+  statValueAmber: {
+    fontSize: 28,
+    fontWeight: "800",
+    color: palette.warning,
+    letterSpacing: -0.5,
   },
 });

@@ -1,4 +1,4 @@
-import { palette } from "@/constants/theme";
+import { cardShadow, palette } from "@/constants/theme";
 import type { LocationRecord } from "@/types/checklist";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -12,12 +12,20 @@ export function LocationCheckRow({ location, visited, onToggle }: Props) {
   return (
     <Pressable
       onPress={onToggle}
-      style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
+      style={({ pressed }) => [
+        styles.row,
+        visited && styles.rowVisited,
+        cardShadow,
+        pressed && styles.rowPressed,
+      ]}
       accessibilityRole="checkbox"
       accessibilityState={{ checked: visited }}
       accessibilityLabel={`${location.name}, ${visited ? "visited" : "not visited"}`}
     >
-      <View style={[styles.box, visited && styles.boxChecked]} accessibilityElementsHidden>
+      <View
+        style={[styles.box, visited && styles.boxChecked]}
+        accessibilityElementsHidden
+      >
         {visited ? <Text style={styles.checkmark}>✓</Text> : null}
       </View>
       <View style={styles.textCol}>
@@ -34,48 +42,55 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 14,
-    paddingVertical: 14,
-    paddingHorizontal: 14,
-    borderRadius: 12,
+    gap: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    borderRadius: 16,
     backgroundColor: palette.surface,
-    borderWidth: 1,
-    borderColor: palette.border,
-    marginBottom: 12,
+    borderWidth: 2,
+    borderColor: palette.borderLight,
+    marginBottom: 14,
+  },
+  rowVisited: {
+    borderColor: palette.success,
+    backgroundColor: palette.surfaceMuted,
   },
   rowPressed: {
     opacity: 0.94,
+    transform: [{ scale: 0.995 }],
   },
   box: {
-    width: 28,
-    height: 28,
-    borderRadius: 6,
+    width: 34,
+    height: 34,
+    borderRadius: 10,
     borderWidth: 2,
-    borderColor: palette.accent,
+    borderColor: palette.accentBright,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: palette.surface,
   },
   boxChecked: {
-    backgroundColor: palette.accent,
-    borderColor: palette.accent,
+    backgroundColor: palette.success,
+    borderColor: palette.success,
   },
   checkmark: {
     color: "#ffffff",
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "800",
   },
   textCol: {
     flex: 1,
-    gap: 4,
+    gap: 5,
   },
   title: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "700",
     color: palette.text,
+    lineHeight: 22,
   },
   sub: {
-    fontSize: 13,
+    fontSize: 14,
     color: palette.muted,
+    fontWeight: "500",
   },
 });

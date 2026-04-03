@@ -15,11 +15,11 @@ export function PersistErrorBanner({ message, onDismiss, onRetry }: Props) {
         {onRetry ? (
           <Pressable
             onPress={onRetry}
-            style={({ pressed }) => [styles.btn, pressed && styles.btnPressed]}
+            style={({ pressed }) => [styles.btn, styles.btnPrimary, pressed && styles.btnPressed]}
             accessibilityRole="button"
             accessibilityLabel="Retry loading saved data"
           >
-            <Text style={styles.btnLabel}>Retry</Text>
+            <Text style={styles.btnLabelPrimary}>Retry</Text>
           </Pressable>
         ) : null}
         <Pressable
@@ -38,37 +38,49 @@ export function PersistErrorBanner({ message, onDismiss, onRetry }: Props) {
 const styles = StyleSheet.create({
   wrap: {
     backgroundColor: palette.dangerBg,
-    borderColor: palette.border,
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 12,
-    marginBottom: 12,
-    gap: 8,
+    borderColor: palette.dangerText,
+    borderWidth: 2,
+    borderRadius: 14,
+    padding: 14,
+    marginBottom: 14,
+    gap: 10,
   },
   text: {
     color: palette.dangerText,
     fontSize: 14,
-    lineHeight: 20,
+    lineHeight: 21,
+    fontWeight: "600",
   },
   actions: {
     flexDirection: "row",
-    gap: 8,
+    gap: 10,
     flexWrap: "wrap",
   },
   btn: {
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 12,
     backgroundColor: palette.surface,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: palette.border,
+    minHeight: 44,
+    justifyContent: "center",
+  },
+  btnPrimary: {
+    backgroundColor: palette.accent,
+    borderColor: palette.accent,
   },
   btnPressed: {
-    opacity: 0.85,
+    opacity: 0.88,
   },
   btnLabel: {
     color: palette.text,
-    fontSize: 14,
-    fontWeight: "600",
+    fontSize: 15,
+    fontWeight: "700",
+  },
+  btnLabelPrimary: {
+    color: "#ffffff",
+    fontSize: 15,
+    fontWeight: "700",
   },
 });

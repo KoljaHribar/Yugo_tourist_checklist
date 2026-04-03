@@ -1,6 +1,7 @@
 import { FILTER_OPTIONS } from "@/constants/filters";
-import { palette } from "@/constants/theme";
+import { filterChipTheme, palette } from "@/constants/theme";
 import type { CountryFilterId } from "@/types/checklist";
+import * as Haptics from "expo-haptics";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 type Props = {
@@ -18,20 +19,31 @@ export function FilterRow({ value, onChange }: Props) {
       >
         {FILTER_OPTIONS.map((opt) => {
           const selected = opt.id === value;
+          const colors = filterChipTheme[opt.id];
           return (
             <Pressable
               key={opt.id}
-              onPress={() => onChange(opt.id)}
+              onPress={() => {
+                void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                onChange(opt.id);
+              }}
               style={({ pressed }) => [
                 styles.chip,
-                selected && styles.chipSelected,
+                !selected && { backgroundColor: colors.light, borderColor: colors.main },
+                selected && { backgroundColor: colors.main, borderColor: colors.main },
                 pressed && styles.chipPressed,
               ]}
               accessibilityRole="button"
               accessibilityState={{ selected }}
               accessibilityLabel={`Filter ${opt.label}`}
             >
-              <Text style={[styles.chipText, selected && styles.chipTextSelected]}>
+              <Text
+                style={[
+                  styles.chipText,
+                  selected && { color: colors.textOnMain },
+                  !selected && { color: palette.text },
+                ]}
+              >
                 {opt.label}
               </Text>
             </Pressable>
@@ -44,35 +56,31 @@ export function FilterRow({ value, onChange }: Props) {
 
 const styles = StyleSheet.create({
   outer: {
-    marginBottom: 12,
+    marginBottom: 14,
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-    paddingVertical: 4,
+    gap: 10,
+    paddingVertical: 6,
+    paddingRight: 4,
   },
   chip: {
-    paddingVertical: 8,
-    paddingHorizontal: 14,
+    paddingVertical: 11,
+    paddingHorizontal: 16,
     borderRadius: 999,
     backgroundColor: palette.surface,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: palette.border,
-  },
-  chipSelected: {
-    backgroundColor: palette.accent,
-    borderColor: palette.accent,
+    minHeight: 44,
+    justifyContent: "center",
   },
   chipPressed: {
-    opacity: 0.9,
+    opacity: 0.88,
+    transform: [{ scale: 0.98 }],
   },
   chipText: {
-    color: palette.text,
     fontSize: 14,
-    fontWeight: "600",
-  },
-  chipTextSelected: {
-    color: "#ffffff",
+    fontWeight: "700",
   },
 });

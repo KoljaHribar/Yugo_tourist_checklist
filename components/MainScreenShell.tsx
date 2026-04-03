@@ -37,32 +37,38 @@ export function MainScreenShell({
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
       <View style={styles.root}>
-        <Text style={styles.screenTitle}>{title}</Text>
+        <View style={styles.main}>
+          <View style={styles.titleBlock}>
+            <Text style={styles.screenTitle}>{title}</Text>
+            <View style={styles.titleAccent} />
+          </View>
 
-        {persistError ? (
-          <PersistErrorBanner
-            message={persistError}
-            onDismiss={clearPersistError}
-            onRetry={() => void reloadFromStorage()}
-          />
-        ) : null}
+          {persistError ? (
+            <PersistErrorBanner
+              message={persistError}
+              onDismiss={clearPersistError}
+              onRetry={() => void reloadFromStorage()}
+            />
+          ) : null}
 
-        <FilterRow value={filter} onChange={setFilter} />
+          <FilterRow value={filter} onChange={setFilter} />
 
-        <ScrollView
-          style={styles.scroll}
-          contentContainerStyle={[styles.scrollContent, scrollContentStyle]}
-          keyboardShouldPersistTaps="handled"
-        >
-          {loading ? (
-            <View style={styles.loadingBox}>
-              <ActivityIndicator size="large" color={palette.accent} />
-              <Text style={styles.loadingText}>{loadingText}</Text>
-            </View>
-          ) : (
-            children
-          )}
-        </ScrollView>
+          <ScrollView
+            style={styles.scroll}
+            contentContainerStyle={[styles.scrollContent, scrollContentStyle]}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            {loading ? (
+              <View style={styles.loadingBox}>
+                <ActivityIndicator size="large" color={palette.accentBright} />
+                <Text style={styles.loadingText}>{loadingText}</Text>
+              </View>
+            ) : (
+              children
+            )}
+          </ScrollView>
+        </View>
 
         <BottomNav />
       </View>
@@ -77,29 +83,44 @@ const styles = StyleSheet.create({
   },
   root: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 8,
+    paddingTop: 10,
+  },
+  main: {
+    flex: 1,
+    paddingHorizontal: 18,
+    minHeight: 0,
+  },
+  titleBlock: {
+    marginBottom: 14,
   },
   screenTitle: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "800",
     color: palette.text,
-    marginBottom: 12,
+    letterSpacing: -0.5,
+  },
+  titleAccent: {
+    marginTop: 8,
+    width: 48,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: palette.accentBright,
   },
   scroll: {
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 8,
+    paddingBottom: 16,
     flexGrow: 1,
   },
   loadingBox: {
-    paddingVertical: 48,
+    paddingVertical: 56,
     alignItems: "center",
-    gap: 12,
+    gap: 14,
   },
   loadingText: {
     color: palette.muted,
-    fontSize: 15,
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
