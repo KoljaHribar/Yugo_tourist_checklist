@@ -1,19 +1,16 @@
-import { BottomNav } from "@/components/BottomNav";
-import { FilterRow } from "@/components/FilterRow";
-import { PersistErrorBanner } from "@/components/PersistErrorBanner";
+import { MainScreenShell } from "@/components/MainScreenShell";
 import { SightsVisitedBar } from "@/components/SightsVisitedBar";
 import { palette } from "@/constants/theme";
+import { useCountryFilter } from "@/context/CountryFilterContext";
 import { useVisited } from "@/context/VisitedContext";
 import { LOCATIONS } from "@/data/locations";
 import { computeStats, filterLocations } from "@/lib/checklistStats";
-import type { CountryFilterId } from "@/types/checklist";
-import { useMemo, useState } from "react";
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useMemo } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function StatsScreen() {
-  const [filter, setFilter] = useState<CountryFilterId>("all");
-  const { visited, loading, persistError, clearPersistError, reloadFromStorage } = useVisited();
+  const { filter } = useCountryFilter();
+  const { visited, loading } = useVisited();
 
   const stats = useMemo(() => {
     const subset = filterLocations(LOCATIONS, filter);
@@ -21,91 +18,36 @@ export default function StatsScreen() {
   }, [filter, visited]);
 
   return (
-    <SafeAreaView style={styles.safe} edges={["top"]}>
-      <View style={styles.root}>
-        <Text style={styles.screenTitle}>My Stats</Text>
+    <MainScreenShell
+      title="My Stats"
+      loading={loading}
+      loadingText="Loading your stats…"
+      scrollContentStyle={styles.statsScrollContent}
+    >
+      <SightsVisitedBar percent={stats.percent} />
 
-        {persistError ? (
-          <PersistErrorBanner
-            message={persistError}
-            onDismiss={clearPersistError}
-            onRetry={() => void reloadFromStorage()}
-          />
-        ) : null}
-
-        <FilterRow value={filter} onChange={setFilter} />
-
-        <ScrollView
-          style={styles.scroll}
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
-        >
-          {loading ? (
-            <View style={styles.loadingBox}>
-              <ActivityIndicator size="large" color={palette.accent} />
-              <Text style={styles.loadingText}>Loading your stats…</Text>
-            </View>
-          ) : (
-            <>
-              <SightsVisitedBar percent={stats.percent} />
-
-              <View style={styles.statBlock}>
-                <View style={styles.statRow}>
-                  <Text style={styles.statLabel}>Elevation Gained (In Meters)</Text>
-                  <Text style={styles.statValue}>{stats.elevationSum}m</Text>
-                </View>
-              </View>
-
-              <View style={styles.statBlock}>
-                <View style={styles.statRow}>
-                  <Text style={styles.statLabel}>Covered Regions</Text>
-                  <Text style={styles.statValue}>
-                    {stats.fullyCoveredRegions}/{stats.totalRegions}
-                  </Text>
-                </View>
-              </View>
-            </>
-          )}
-        </ScrollView>
-
-        <BottomNav />
+      <View style={styles.statBlock}>
+        <View style={styles.statRow}>
+          <Text style={styles.statLabel}>Elevation Gained (In Meters)</Text>
+          <Text style={styles.statValue}>{stats.elevationSum}m</Text>
+        </View>
       </View>
-    </SafeAreaView>
+
+      <View style={styles.statBlock}>
+        <View style={styles.statRow}>
+          <Text style={styles.statLabel}>Covered Regions</Text>
+          <Text style={styles.statValue}>
+            {stats.fullyCoveredRegions}/{stats.totalRegions}
+          </Text>
+        </View>
+      </View>
+    </MainScreenShell>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: palette.background,
-  },
-  root: {
-    flex: 1,
-    paddingHorizontal: 16,
+  statsScrollContent: {
     paddingTop: 8,
-  },
-  screenTitle: {
-    fontSize: 24,
-    fontWeight: "800",
-    color: palette.text,
-    marginBottom: 12,
-  },
-  scroll: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingTop: 8,
-    paddingBottom: 8,
-    flexGrow: 1,
-  },
-  loadingBox: {
-    paddingVertical: 48,
-    alignItems: "center",
-    gap: 12,
-  },
-  loadingText: {
-    color: palette.muted,
-    fontSize: 15,
   },
   statBlock: {
     marginBottom: 28,

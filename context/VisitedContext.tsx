@@ -7,6 +7,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -71,6 +72,7 @@ export function VisitedProvider({ children }: { children: React.ReactNode }) {
   const [visited, setVisited] = useState<VisitedMap>({});
   const [loading, setLoading] = useState(true);
   const [persistError, setPersistError] = useState<string | null>(null);
+  const persistChainRef = useRef(Promise.resolve());
 
   const reloadFromStorage = useCallback(async () => {
     setLoading(true);
@@ -92,13 +94,21 @@ export function VisitedProvider({ children }: { children: React.ReactNode }) {
     void reloadFromStorage();
   }, [reloadFromStorage]);
 
-  const persist = useCallback(async (next: VisitedMap) => {
-    setPersistError(null);
-    try {
-      await writeVisitedToStorage(next);
-    } catch {
-      setPersistError("Could not save your checklist. Your changes may be lost after closing the app.");
-    }
+  const persist = useCallback((next: VisitedMap) => {
+    persistChainRef.current = persistChainRef.current
+      .catch(() => {
+        /* keep queue alive after a failed write */
+      })
+      .then(async () => {
+        setPersistError(null);
+        try {
+          await writeVisitedToStorage(next);
+        } catch {
+          setPersistError(
+            "Could not save your checklist. Your changes may be lost after closing the app.",
+          );
+        }
+      });
   }, []);
 
   const toggleVisited = useCallback(
